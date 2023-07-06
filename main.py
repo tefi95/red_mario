@@ -5,7 +5,7 @@ WIDTH = 700
 HEIGHT = 500
 FPS = 60
 screen = display.set_mode((700, 500))
-display.set_caption('Red Mario')
+display.set_caption('Подземелье')
 clock = time.Clock()
 
 class GameSprite(sprite.Sprite):
@@ -33,7 +33,15 @@ class Player(GameSprite):
         if keys_pressed[K_RIGHT] and self.rect.x < 640:
             self.rect.x += self.speed
         
-player = Player('gg.png', 20, 300, 20)
+        if keys_pressed[K_SPACE]:
+            self.rect.y -= 10
+            self.rect.y += 15 
+        
+        # if keys_pressed[K_SPACE]:
+        #     self.rect.y += 10
+
+
+player = Player('a1.png', 20, 300, 20)
 
 
 class Enemy(GameSprite):
@@ -41,19 +49,25 @@ class Enemy(GameSprite):
         super().__init__(image, player_x, player_y, speed)
         self.right = True
 
-    def update(self):
-        self.rect.y += self.speed
-
 
 game = True
+monetka = GameSprite('treasure.png', 620, 300, 20)
+demon_1 = Enemy('Canine.png', 200, 250, 20)
+demon_2 = Enemy('Canine_2.png', 500, 330, 20)
 
 #игровой цикл
 while game:
     clock.tick(FPS)
     screen.blit(background, ((0, 0)))
     player.update()
+    monetka.update()
+    demon_1.update()
+    demon_2.update()
 
     player.reset()
+    monetka.reset()
+    demon_1.reset()
+    demon_2.reset()
 
     #работа с событиями
     for e in event.get():
